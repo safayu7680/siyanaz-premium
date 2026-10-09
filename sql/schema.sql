@@ -1,0 +1,6 @@
+CREATE TABLE products (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), slug TEXT UNIQUE CHECK (slug ~ '^[a-z0-9-]{3,50}$'), name TEXT CHECK (name ~ '^[A-Za-z0-9 &()-]{3,100}$' AND name !~* '<script'), price INT CHECK (price BETWEEN 100 AND 500000), stock INT, image_url TEXT CHECK (image_url ~ '^https://.*supabase\.co'), collection TEXT, is_new_launch BOOL DEFAULT false, is_active BOOL DEFAULT true);
+CREATE TABLE admin_users (username TEXT UNIQUE, role TEXT CHECK (role IN ('owner','admin')), pin TEXT);
+INSERT INTO admin_users VALUES ('owner','owner','739281'),('admin1','admin','1234'),('admin2','admin','1234'),('admin3','admin','1234'),('admin4','admin','1234'),('admin5','admin','1234'),('admin6','admin','1234');
+CREATE TABLE enquiries (id UUID PRIMARY KEY DEFAULT gen_random_uuid(), customer_phone TEXT CHECK (customer_phone ~ '^07[0-9]{8}$'), products JSONB, total_inquiry_value INT, message TEXT, consent_given BOOL DEFAULT true, consent_at TIMESTAMPTZ DEFAULT now());
+ALTER TABLE products ENABLE ROW LEVEL SECURITY; CREATE POLICY "public read" ON products FOR SELECT USING (is_active=true);
+ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY; ALTER TABLE enquiries ENABLE ROW LEVEL SECURITY;

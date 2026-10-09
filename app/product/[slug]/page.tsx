@@ -1,0 +1,1 @@
+export default function Product({params}:{params:{slug:string}}){ return <div style={{padding:'20px'}}><h1>Product {params.slug}</h1><p>Images price Rs stock NEW 7 days Add to Cart Save Share Call</p></div> }

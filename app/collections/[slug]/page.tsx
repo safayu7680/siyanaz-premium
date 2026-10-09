@@ -1,0 +1,1 @@
+export default function Collection({params}:{params:{slug:string}}){ return <div style={{padding:'20px'}}><h1>Collection: {decodeURIComponent(params.slug)}</h1><p>Products list price 100-500k filter New Launch In Stock</p></div> }
